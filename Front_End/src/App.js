@@ -1,10 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import NavBar from "./Components/Nav_Bar/navbar";
+import AuthPage from "./Pages/Authinticate/authPage";
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
+
+
 
 function App() {
 	return (
 		<>
- 
+			<div className="App">
+				{/* <NavBar/> */}
+				<AuthPage/>
+			</div>
 		</>
 	);
 }
