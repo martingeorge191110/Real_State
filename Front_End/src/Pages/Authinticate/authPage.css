@@ -2,6 +2,7 @@
 	max-width: 100%;
 	height: 80vh;
 	padding: 0 5rem;
+	animation: formAn 1s ease-in-out;
  }
  
  .auth-card {
@@ -12,7 +13,9 @@
 	transform-style: preserve-3d;
 	transition: transform 0.6s cubic-bezier(.75, -0.5, 0, 1.75);
  }
- 
+ .auth-card h2{
+	animation: tobottom 1s ease-in-out;
+ }
  .auth-card-flip {
 	transform: rotateY(180deg);
  }
@@ -33,6 +36,7 @@
 	align-items: center;
 	padding: 40px;
 	box-sizing: border-box;
+	animation: formAn 1s ease-in-out;
  }
  
  .auth-back {
@@ -118,6 +122,7 @@
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	font-size: 1.2rem;
+	animation: toleft 1s ease-in-out;
  }
  
  .auth-button {
@@ -131,8 +136,11 @@
 	font-size: 1.2rem;
 	cursor: pointer;
 	transition: background-color 0.3s ease;
+	animation: toright 1s ease-in-out;
  }
- 
+ .auth-form p {
+	animation: totop 1s ease-in-out;
+ }
  .auth-button:hover {
 	background-color: #005bb5;
  }
@@ -149,7 +157,26 @@
  .auth-link:hover {
 	color: #005bb5;
  }
- 
+ @keyframes formAn {
+	from {opacity: 0;}
+	to {opacity: 1;}
+ }
+ @keyframes toleft {
+	from {transform: translateX(-100px)}
+	to {transform: translateX(0)}
+ }
+ @keyframes toright {
+	from {transform: translateX(100px)}
+	to {transform: translateX(0)}
+ }
+ @keyframes totop {
+	from {transform: translateY(100px)}
+	to {transform: translateY(0)}
+ }
+ @keyframes tobottom {
+	from {transform: translateY(-100px)}
+	to {transform: translateY(0)}
+ }
  /* Responsive styles */
  @media (max-width: 768px) {
 	.auth-container {

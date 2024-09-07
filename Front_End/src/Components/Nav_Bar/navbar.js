@@ -10,7 +10,7 @@ const NavBar = () => {
 	  <nav className="navbar">
 		 <div className="navbar-container">
 			<div className="navbar-logo">
-				<a href="/" className="navbar-title">Company</a>
+				<a href="/" className="navbar-title">Real State</a>
 			  		</div>
 			<input type="checkbox" id="navbar-toggle" className="navbar-toggle" />
 			<label htmlFor="navbar-toggle" className="navbar-icon">

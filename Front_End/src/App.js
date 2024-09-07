@@ -7,11 +7,12 @@ import {BrowserRouter as Router,
 	Route,
 	Switch
 } from 'react-router-dom'
+import MainPage from "./Pages/Main/main";
 
 
 
 function App() {
-	localStorage.clear()
+
 	const tokenValid = useSelector(
 			state => state.token
 	)
@@ -20,8 +21,9 @@ function App() {
 		<>
 			<div className="App">
 				<Router>
+					<Route component={tokenValid ? NavBar : ""}/>
 					<Switch>
-						<Route exact component={tokenValid ? NavBar : AuthPage}/> 
+						<Route exact component={tokenValid ? MainPage : AuthPage}/> 
 					</Switch>
 				</Router>
 			</div>

@@ -1,4 +1,4 @@
-import { isEmailValid } from "./emailValidator" 
+import { isEmailValid } from "./emailValidator.js" 
 /**
  * Function to checking the validation of user information Sign Up
  *
