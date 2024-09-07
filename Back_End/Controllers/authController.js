@@ -4,6 +4,7 @@ import { isEmailValid } from "../Validators/emailValidator.js";
 import { nameUpperCase } from "../Validators/stringValid.js";
 import { authResponse, comparePass, createToken, findUser, hashingPassword } from "../Utils/authHelper.js";
 import {sendMail, sendMailRestPass} from "../Utils/mailHelper.js";
+import { signInValidator, signUpValidator } from "../Validators/authValidateor.js";
 
 dotenv.config()
 
@@ -15,12 +16,8 @@ dotenv.config()
 const singUp = async (req, res, next) => {
 	const {username, useremail, national, password} = req.body
 	
-	/* Check for email validation */
-	if (!isEmailValid(useremail))	{
-		const errorHand = new Error ("User Email Is Not Valid");
-		errorHand.statusCode = 400;
+	if (!signUpValidator(username, useremail, national, password))
 		return (next(errorHand))
-	}
 
 	const userNameUpper = nameUpperCase(username)
 	try {
@@ -62,13 +59,10 @@ const singUp = async (req, res, next) => {
 const signIn = async (req, res, next) => {
 	const {useremail, password} = req.body
 
-	/* Check email validation */
-	if (!isEmailValid(useremail))
-	{
-		const newError = new Error ("User Email Is Not Valid");
-		newError.statusCode = 400;
+	/* Checking for body information validation */
+	if (!signInValidator(useremail, password))
 		return (next(newError))
-	}
+	
 	try {
 		/* Find the user account at first with user email and handle error */
 		const findUserAcc = await findUser(useremail);
@@ -105,6 +99,12 @@ const signIn = async (req, res, next) => {
 const sendGenCode = async (req, res, next) => {
 	const {useremail} = req.body
 
+	if (!isEmailValid(useremail))
+	{
+		const newError = new Error ("User Email Is Not Valid");
+		newError.statusCode = 400;
+		return (next(newError))
+	}
 	try {
 		const findUserEmail = await User.findOne({
 			useremail: useremail
@@ -147,8 +147,10 @@ const sendGenCode = async (req, res, next) => {
 
 const resetPssword = async (req, res, next) => {
 	const { password, useremail } = req.body;
-	const hashedPass = hashingPassword(password);
+	if (!signInValidator(useremail, password))
+		return (next(newError))
 
+	const hashedPass = hashingPassword(password);
 	try {
 		const updateUserPass = await User.updateOne({
 			useremail: useremail

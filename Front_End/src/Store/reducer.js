@@ -11,6 +11,8 @@ const appStateStore = new AppState(
 const AppReducer = (state = appStateStore, action) => {
 	if (action.type === "SIGN_UP")
 		return {...state, token: action.payload}
+	if (action.type === "SIGN_IN")
+		return {...state, token: action.payload}
 
 	return state
 }

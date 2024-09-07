@@ -22,7 +22,7 @@ const sendMail = async (userEmail, userName) => {
 		subject: "Welcome To You!",
 		text: "Hello, Admin Martin of this website welcome to you, you have a lot of offers for registering",
 		html:  `
-			<h1>Welcome Back, ${userName}!</h1>
+			<h1>Welcome, ${userName}!</h1>
 			<p>We're glad to see you on our platform. If you have any questions or need assistance, feel free to reach out to us.</p>
 			<p>Best Regards,<br>Real State Team</p>
  		`

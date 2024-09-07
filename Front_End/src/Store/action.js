@@ -10,4 +10,15 @@ const signUpAction = (token) => {
 	}
 }
 
-export {signUpAction}
+/**
+ * Action Function to change token
+ */
+
+const signInAction = (token) => {
+	return {
+		type: "SIGN_IN",
+		payload: token
+	}
+} 
+
+export {signUpAction, signInAction}

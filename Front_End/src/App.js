@@ -11,7 +11,7 @@ import {BrowserRouter as Router,
 
 
 function App() {
-
+	localStorage.clear()
 	const tokenValid = useSelector(
 			state => state.token
 	)
