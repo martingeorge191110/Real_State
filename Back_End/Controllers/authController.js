@@ -44,7 +44,9 @@ const singUp = async (req, res, next) => {
 		/* Create e new Token for user Auth */
 		const token = createToken(newUser.useremail, newUser._id);
 
-		return (authResponse(res, 200, token, "Signed up, Succesfully"))
+		const mailChecks = await sendMail(useremail, username);
+
+		return (authResponse(res, 200, token, mailChecks ? "Signed up and mail sent, Succesfully" : "Signed up, Succefully"))
 
 	} catch (err) {
 		const newErr = new Error("Something Went Wrong")
