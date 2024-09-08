@@ -2,7 +2,8 @@ import { isEmailValid } from "./emailValidator.js"
 /**
  * Function to checking the validation of user information Sign Up
  *
- * Return: (boolean Value)
+ * Return: (Error object)
+ * otherwise - null
  */
 
 const signUpValidator = (username, useremail, national, password) => {
@@ -10,34 +11,35 @@ const signUpValidator = (username, useremail, national, password) => {
 	if (!isEmailValid(useremail))	{
 		const errorHand = new Error ("User Email Is Not Valid");
 		errorHand.statusCode = 400;
-		return (false)
+		return (errorHand)
 	}
 	/* Check for user name validation */
 	if (!username || username === "") {
 		const errorHand = new Error ("User name Is Not Valid");
 		errorHand.statusCode = 400;
-		return (false)
+		return (errorHand)
 	}
 	/* Check for user password validation */
 	if (!password || password === "") {
 		const errorHand = new Error ("User Password Is Not Valid");
 		errorHand.statusCode = 400;
-		return (false)
+		return (errorHand)
 	}
 	/* Check for user national validation */
 	if (!national || national === "") {
 		const errorHand = new Error ("User Password Is Not Valid");
 		errorHand.statusCode = 400;
-		return (false)
+		return (errorHand)
 	}
 
-	return (true)
+	return (null)
 }
 
 /**
  * Function to checking the validation of user information Sign Up
  *
- * Retrun: (boolean Value)
+ * Retrun: (Error Object)
+ * otherwise - (null)
  */
 
 const signInValidator = (useremail, password) => {
@@ -45,15 +47,15 @@ const signInValidator = (useremail, password) => {
 	{
 		const newError = new Error ("User Email Is Not Valid");
 		newError.statusCode = 400;
-		return (false)
+		return (newError)
 	}
 	if (!password || password === "") {
-		const newError = new Error ("User Email Is Not Valid");
+		const newError = new Error ("User Password Is Not Valid");
 		newError.statusCode = 400;
-		return (false)
+		return (newError)
 	}
 
-	return (true)
+	return (null)
 }
 
 export {signUpValidator, signInValidator}

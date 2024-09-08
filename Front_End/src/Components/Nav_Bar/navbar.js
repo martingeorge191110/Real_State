@@ -5,6 +5,7 @@ const NavBar = () => {
 
 	/* Profile list using ref */
 	const profileList = useRef(null)
+	
 
 	return (
 	  <nav className="navbar">

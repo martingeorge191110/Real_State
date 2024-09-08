@@ -8,6 +8,7 @@ import {BrowserRouter as Router,
 	Switch
 } from 'react-router-dom'
 import MainPage from "./Pages/Main/main";
+import SearchList from "./Pages/Search_List/searchList";
 
 
 
@@ -22,8 +23,9 @@ function App() {
 			<div className="App">
 				<Router>
 					<Route component={tokenValid ? NavBar : ""}/>
-					<Switch>
-						<Route exact component={tokenValid ? MainPage : AuthPage}/> 
+					<Switch> 
+						<Route path="/propertyList" exact component={SearchList}/>
+						<Route exact component={tokenValid ? MainPage : AuthPage}/>
 					</Switch>
 				</Router>
 			</div>

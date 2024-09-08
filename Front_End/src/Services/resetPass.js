@@ -1,5 +1,7 @@
 /**
- * 
+ * Function to fetch api which sending mail to the user with the generated code
+ *
+ * Return: (responnse object which contains useremail and message and code)
  */
 
 const sendGenCodeMail = async (e, useremail, setLoad, setMess) => {
@@ -33,7 +35,9 @@ const sendGenCodeMail = async (e, useremail, setLoad, setMess) => {
 }
 
 /**
- * 
+ * Fetch Api to reset password and change it in DB
+ *
+ * Retrun: (response object)
  */
 
 const resetPassApi = async (e, setCodeCheck, jsonObj, loading) => {

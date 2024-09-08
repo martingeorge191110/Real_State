@@ -1,0 +1,243 @@
+/* Search list page styles */
+.search-list-page {
+   width: 100%;
+   /* max-width: 1200px; */
+   display: flex;
+   justify-content: space-between;
+   padding: 2rem;
+   box-sizing: border-box;
+   animation: fadeIn 1.2s ease-in-out;
+ }
+ 
+ /* Search section styles */
+ .search-section {
+   flex: 1;
+   display: flex;
+   width: 100%;
+   padding: 0;
+   flex-direction: column;
+   padding-right: 2rem;
+   animation: slideInLeft 1s ease-in-out;
+ }
+ 
+ /* Search form styles */
+ .search-form {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 0.5rem;
+   background-color: #fff;
+   padding: 2rem;
+   margin-bottom: 2rem;
+   border-radius: 10px;
+   width: 100%;
+   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+ }
+ 
+ .search-input {
+   flex: 1 1 calc(33.333% - 1rem);
+   padding: 0.5rem;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   font-size: 1rem;
+ }
+ 
+ .search-button {
+   flex: 1 1 100%;
+   padding: 0.5rem;
+   background-color: #0073e6;
+   border: none;
+   border-radius: 5px;
+   color: white;
+   font-size: 1.2rem;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+   position: relative;
+ }
+ 
+ .search-button:hover {
+   background-color: #005bb5;
+ }
+ 
+ /* Results list styles */
+ .results-list {
+   display: flex;
+   flex-direction: column;
+   gap: 1.5rem;
+   height: 70vh;
+
+   min-width: 50%;
+	overflow: hidden;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	z-index: 9000;
+	overflow-y: auto;
+	background-color: white;
+	transition: 0.3s;
+ }
+ 
+ /* Search result item styles */
+ .search-result-item {
+   display: flex;
+   justify-content: center;
+   width: 100%;
+   padding: 1rem;
+   background-color: #fff;
+   border-radius: 10px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   transition: transform 0.3s ease;
+ }
+ 
+ .search-result-item:hover {
+   transform: scale(1.02);
+ }
+ 
+ .result-img {
+   width: 15rem;
+   max-height:15rem ;
+   object-fit: cover;
+   margin-right: 1rem;
+   border-radius:1rem ;
+ }
+ 
+ .result-details {
+   flex: 1;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+ }
+ 
+ .result-title {
+   font-size: 1.5rem;
+   color: #333;
+   margin-bottom: 0.5rem;
+ }
+ 
+ .result-location {
+   font-size: 1rem;
+   color: #666;
+   display: flex;
+   align-items: center;
+   gap: 0.5rem;
+ }
+ 
+ .result-price {
+   font-size: 1.2rem;
+   color: white;
+   max-width: 4rem;
+   padding: 0.7rem 0.2rem;
+   border-radius: 1rem;
+   text-align: center;
+   background-color: #53a8fc;
+   margin-bottom: 0.5rem;
+ }
+ .result-fet-act{
+   width: 100%;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+ }
+ .result-features {
+   display: flex;
+   gap: 1rem;
+   font-size: 1rem;
+   color: #666;
+ }
+ 
+ .result-actions {
+   display: flex;
+   gap: 1rem;
+ }
+ 
+ .result-icon {
+   font-size: 1.5rem;
+   color: #666;
+   cursor: pointer;
+   transition: color 0.3s ease;
+ }
+ 
+ .result-icon:hover {
+   color: #0073e6;
+ }
+ 
+ /* Map section styles */
+ .map-section {
+   flex: 1;
+   display: flex;
+   max-height: 100vh;
+   width: 100%;
+   justify-content: center;
+   align-items: center;
+   animation: slideInRight 1s ease-in-out;
+ }
+
+ .leaflet-control-zoom {
+   position: absolute;
+   top: 10px;
+   right: 10px;
+   z-index: 1000;
+ }
+ 
+ .leaflet-control-zoom-in,
+ .leaflet-control-zoom-out {
+   background-color: white;
+   border: 1px solid #ccc;
+   border-radius: 3px;
+   width: 30px;
+   height: 30px;
+ }
+ 
+ .popupContainer{
+   display: flex;
+   gap: 20px;
+ 
+   img{
+     width: 64px;
+     height: 48px;
+     object-fit: cover;
+     border-radius: 5px;
+   }
+ 
+   .textContainer{
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+   }
+ }
+ 
+ /* Animations */
+ @keyframes fadeIn {
+   from { opacity: 0; }
+   to { opacity: 1; }
+ }
+ 
+ @keyframes slideInLeft {
+   from { transform: translateX(-100px); opacity: 0; }
+   to { transform: translateX(0); opacity: 1; }
+ }
+ 
+ @keyframes slideInRight {
+   from { transform: translateX(100px); opacity: 0; }
+   to { transform: translateX(0); opacity: 1; }
+ }
+ 
+ /* Responsive styles */
+ @media (max-width: 768px) {
+   .search-list-page {
+     flex-direction: column;
+   }
+ 
+   .search-section {
+     padding-right: 0;
+   }
+ 
+   .map-section {
+     margin-top: 2rem;
+   }
+ 
+   .search-input {
+     flex: 1 1 100%;
+   }
+ 
+   .search-button {
+     flex: 1 1 100%;
+   }
+ }

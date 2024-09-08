@@ -16,8 +16,9 @@ dotenv.config()
 const singUp = async (req, res, next) => {
 	const {username, useremail, national, password} = req.body
 	
-	if (!signUpValidator(username, useremail, national, password))
-		return (next(errorHand))
+	const checkValidators = signUpValidator(username, useremail, national, password)
+	if (checkValidators !== null)
+		return (next(checkValidators))
 
 	const userNameUpper = nameUpperCase(username)
 	try {
@@ -60,8 +61,9 @@ const signIn = async (req, res, next) => {
 	const {useremail, password} = req.body
 
 	/* Checking for body information validation */
-	if (!signInValidator(useremail, password))
-		return (next(newError))
+	const checkValidators = signInValidator(useremail, password)
+	if (checkValidators !== null)
+		return (next(checkValidators))
 	
 	try {
 		/* Find the user account at first with user email and handle error */
@@ -147,8 +149,12 @@ const sendGenCode = async (req, res, next) => {
 
 const resetPssword = async (req, res, next) => {
 	const { password, useremail } = req.body;
-	if (!signInValidator(useremail, password))
-		return (next(newError))
+
+	/* Check user information validation */
+	const checkValidators = signInValidator(useremail, password)
+	console.log(checkValidators)
+	if (checkValidators !== null)
+		return (next(checkValidators))
 
 	const hashedPass = hashingPassword(password);
 	try {
