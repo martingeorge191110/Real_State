@@ -5,6 +5,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import Auth from "./Routers/authRouter.js";
 import HandleError from "./Middlewares/errorHandling.js";
+import PropertyInf from "./Routers/propertyRouter.js";
 
 /* Server Variable */
 const server = express()
@@ -34,6 +35,9 @@ server.use(express.json())
 
 /* Authintication Router */
 server.use("/api/auth", Auth)
+
+/* Post a new property middleware */
+server.use("/api/property", PropertyInf)
 
 /* Erro Handling MiddleWare */
 server.use("*", HandleError);

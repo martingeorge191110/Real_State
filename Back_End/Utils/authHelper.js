@@ -63,7 +63,7 @@ const createToken = (useremail, _id) => {
 		useremail: useremail,
 		_id: _id
 	}, process.env.JWT_SECRET, {
-		expiresIn: process.env.EXP_TIME
+		expiresIn: '1h'
 	})
 
 	return (token)

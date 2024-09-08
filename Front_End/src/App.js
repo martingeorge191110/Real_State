@@ -22,7 +22,7 @@ function App() {
 		<>
 			<div className="App">
 				<Router>
-					<Route component={tokenValid ? NavBar : ""}/>
+					<Route component={tokenValid ? NavBar : AuthPage}/>
 					<Switch> 
 						<Route path="/propertyList" exact component={SearchList}/>
 						<Route exact component={tokenValid ? MainPage : AuthPage}/>
