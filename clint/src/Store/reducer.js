@@ -1,11 +1,13 @@
 class AppState {
-	constructor (token) {
+	constructor (token, searchProp) {
 		this.token = token || null
+		this.searchProp = searchProp || null
 	}
 }
 
 const appStateStore = new AppState(
 	localStorage.getItem("token") ? localStorage.getItem("token") : null,
+	null
 )
 
 const AppReducer = (state = appStateStore, action) => {
@@ -13,6 +15,8 @@ const AppReducer = (state = appStateStore, action) => {
 		return {...state, token: action.payload}
 	if (action.type === "SIGN_IN")
 		return {...state, token: action.payload}
+	if (action.type === "PROP_SEARCH")
+		return {...state, searchProp: action.payload}
 
 	return state
 }

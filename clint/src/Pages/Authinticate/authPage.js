@@ -10,6 +10,7 @@ import { signInApi } from '../../Services/signIn';
 import { forPassSiInHandler } from '../../Services/passForgetHandler';
 import { sendGenCodeMail, resetPassApi } from '../../Services/resetPass';
 import { compareCode } from '../../Utilis/compareCodes';
+import Loading from '../../Components/Loading.js/loading';
 
 const AuthPage = () => {
 	const dispatch = useDispatch()
@@ -108,10 +109,7 @@ const AuthPage = () => {
 					console.error(err)
 				}
 			}} type="submit" className="auth-button">{inLoading ?
-					<div className="d-flex justify-content-center align-items-center background-color-white" >
-						<div className="spinner-border text-white" role="status"></div>
-		 			</div>
-					:"Sign In"}</button> : ""}
+					<Loading /> :"Sign In"}</button> : ""}
 
 			{codeChecker ? <button onClick={(e) => {resetPassApi(e, setCodeChecker, signInInf, setInLoading).then(resObj => setresetPassMess(resObj.message))}} type="submit" className="auth-button">Reset Password</button> : ""}
 			{gencode ? <button onClick={() => {
@@ -123,10 +121,7 @@ const AuthPage = () => {
 				}
 				}} type="submit" className="auth-button">Submit Code</button> : ""}
 			{fpClick ? <button onClick={(e) => {sendGenCodeMail(e, useremail, setInLoading, setResMessTwo).then(resObj => setGencode(resObj.code))}} className="auth-button">{inLoading ? 
-			<div className="d-flex justify-content-center align-items-center background-color-white" >
-				<div className="spinner-border text-white" role="status"></div>
-		 	</div>
-			:"Send Generated code in Mail"}</button> : ""}
+			<Loading /> :"Send Generated code in Mail"}</button> : ""}
 			<small>{resMessTwo}</small>
 			{ codeChecker ? "" : <p className="auth-link" onClick={toggleAuth}>Don't have an account? Sign Up</p>}
 			<p onClick={() => {
@@ -176,9 +171,7 @@ const AuthPage = () => {
 					console.error(err)
 				}
 			}} type="submit" className="auth-button" style={{backgroundColor: `${upLoading ? "#005bb5" : ""}`}}>
-				{upLoading ? <div className="d-flex justify-content-center align-items-center background-color-white" >
-				<div className="spinner-border text-white" role="status"></div>
-		 			</div> : "Sign Up"}
+				{upLoading ? <Loading/> : "Sign Up"}
 			</button>
 					<small>{resMess}</small>
 			<p className="auth-link" onClick={toggleAuth}>Already have an account? Sign In</p>

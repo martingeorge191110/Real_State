@@ -7,7 +7,8 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet"
 import imgUrl2 from '../../Assets/marker-shadow.png'
 import imgUrl1 from '../../Assets/marker-icon.png'
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link } from 'react-router-dom';
+import NavBar from '../../Components/Nav_Bar/navbar';
 
 
 
@@ -25,8 +26,10 @@ const SearchList = () => {
 
 	/* State that hold the searching elemetns */
 	const [dataList, setDataList] = useState(listData)
-
+	void(setDataList)
 	return (
+		<>
+		<NavBar/>
 		<div className="search-list-page">
 			<div className="search-section">
 				<div className="search-form">
@@ -101,6 +104,7 @@ const SearchList = () => {
   		</MapContainer>
 			</div>
 		</div>
+		</>
 	);
 };
 

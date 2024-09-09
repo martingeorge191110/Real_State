@@ -1,9 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './main.css';
 import image from '../../Assets/bg.png'
 import { changeInputValue } from '../../Utilis/valueCahnge';
+import { searchProperties } from '../../Utilis/searchProperty';
+import { useDispatch } from 'react-redux';
+import { propSearchAction } from '../../Store/action';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+import NavBar from '../../Components/Nav_Bar/navbar'
 
 const MainPage = () => {
+
+	const history = useHistory()
+	const dispatch = useDispatch()
 	/* State to change the botton styling (buy or rent) */
   	const [searchType, setSearchType] = useState('buy');
 
@@ -13,10 +21,13 @@ const MainPage = () => {
 	/* Min Price */
 		const [minPrice, setMinPrice] = useState(0)
 	/* Ma Price */
-		const [maxPrice, setMaxPrice] = useState(100)
+		const [maxPrice, setMaxPrice] = useState(Number.MAX_SAFE_INTEGER)
+	/* Searching state */
 
 
   	return (
+		<>
+		<NavBar/>
 	 	<section className="main-page">
 			<div className="main-content">
 		  		<div className="text-section">
@@ -45,7 +56,12 @@ const MainPage = () => {
 						<input onChange={(e) => changeInputValue(e.currentTarget.value, setLocation)} type="text" className='search-bar' placeholder="City Location"/>
 						<input onChange={(e) => changeInputValue(Number(e.currentTarget.value), setMinPrice)} type="number" className='search-bar' placeholder="Min Price"/>
 						<input onChange={(e) => changeInputValue(Number(e.currentTarget.value), setMaxPrice)} type="number" className='search-bar' placeholder="Max Price"/>
-						<button type="submit" className="search-bar btn">Search</button>
+						<button onClick={(e) => {
+							const searchObj = searchProperties(e, location, minPrice, maxPrice)
+							dispatch(propSearchAction(searchObj))
+							history.push(`/propertyList?city=${searchObj.cityLocation}&minPrice=${searchObj.minPrice}&maxPrice=${searchObj.maxPrice}`)
+							
+							}} type="submit" className="search-bar btn">Search</button>
 					</form> 
 				</div>
 			 	<div className="info-section">
@@ -68,6 +84,7 @@ const MainPage = () => {
 		  		</div>
 			</div>
 		</section>
+		</>
   );
 };
 
