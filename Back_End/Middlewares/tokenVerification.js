@@ -5,7 +5,6 @@ import { createError } from '../Validators/createError.js'
 
 const verifyToken =  (req, res, next) => {
 	const { authorization } = req.headers
-	console.log(authorization)
 
 	if (!authorization) {
 		const error = createError("token must be included in Authorization headers", 404)

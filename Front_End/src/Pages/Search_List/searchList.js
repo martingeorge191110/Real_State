@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './searchList.css';
 import { listData } from '../../Data/searchData';
 import { FaMapMarkerAlt, FaBed, FaBath, FaHeart, FaCommentDots } from 'react-icons/fa';
@@ -9,14 +9,39 @@ import imgUrl2 from '../../Assets/marker-shadow.png'
 import imgUrl1 from '../../Assets/marker-icon.png'
 import { Link } from 'react-router-dom';
 import NavBar from '../../Components/Nav_Bar/navbar';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom';
+import { searchPropApi } from '../../Services/searchProperty';
+import Loading from '../../Components/Loading.js/loading';
 
 
 
 const SearchList = () => {
+	const token = useSelector(
+		state => state.token
+	)
+
+	/* Loading State */
+	const [loading, setLoading] = useState(true)
+	/* Query url search */
+	const query = new URLSearchParams(useLocation().search)
+	const [resp, setResp] = useState(null)
+
+	/* Call Api For Searching propery List */
+	useEffect(() => {
+		searchPropApi(
+			query.get("city"),
+			query.get("minPrice"),
+			query.get("maxPrice"),
+			token,
+			setLoading
+		).then(resObj => setResp(resObj))
+	} , [])
+	// console.log(resp.data)
 	/* Map Information */
 	const position = [51.505, -0.09]
 	const customIcon = new L.Icon({
-			iconUrl:imgUrl1,
+		iconUrl:imgUrl1,
 		iconSize: [25, 41],
 		iconAnchor: [12, 41],
 		popupAnchor: [1, -34],
@@ -24,9 +49,6 @@ const SearchList = () => {
 		shadowSize: [41, 41]
 	});
 
-	/* State that hold the searching elemetns */
-	const [dataList, setDataList] = useState(listData)
-	void(setDataList)
 	return (
 		<>
 		<NavBar/>
@@ -51,18 +73,19 @@ const SearchList = () => {
 					<button className="search-button">Search</button>
 				</div>
 				<div className="results-list">
-					{ dataList.map((property) => {
+					{ !loading ? ( 
+						resp && resp.succes && resp.data && resp.data.length > 0 ? resp.data.map((property) => {
 						return (
-							<div key={property.id} className="search-result-item">
-								<img src={property.images[0]} alt="Property" className="result-img" />
+							<div key={property._id} className="search-result-item">
+								<img src={property.post.images[0]} alt="Property" className="result-img" />
 								<div className="result-details">
-									<h3 className="result-title">{property.title}</h3>
-									<p className="result-location"><FaMapMarkerAlt /> {property.address}</p>
-									<p className="result-price">${property.price}</p>
+									<h3 className="result-title">{property.post.title}</h3>
+									<p className="result-location"><FaMapMarkerAlt /> {property.post.address}</p>
+									<p className="result-price">${property.post.price}</p>
 									<div className="result-fet-act">
 										<div className="result-features">
-											<span><FaBed /> {property.bedroom}</span>
-											<span><FaBath /> {property.bathroom}</span>
+											<span><FaBed /> {property.post.bedroom}</span>
+											<span><FaBath /> {property.post.bathroom}</span>
 										</div>
 										<div className="result-actions">
 											<FaHeart className="result-icon" />
@@ -72,8 +95,14 @@ const SearchList = () => {
 								</div>
 							</div>
 						)
-					})
-					}
+					}) : <div className='search-result-item'>
+								<div className='result-details'>
+									<h3 className='result-title'>
+										No Posts Found with your Requirements!
+									</h3>
+								</div>
+						</div>
+					) : <Loading color={"red"}/>}
 					{/* Repeat the search-result-item div for more results */}
 				</div>
 			</div>
@@ -84,22 +113,22 @@ const SearchList = () => {
       		attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     		/>
     		{
-					dataList.map((property) => {
+					resp && resp.succes && resp.data && resp.data.length > 0 ? resp.data.map((property) => {
 						return (
-							<Marker position={[property.latitude, property.longitude]} icon={customIcon}>
+							<Marker position={[property.post.latitude, property.post.longitude]} icon={customIcon}>
       					<Popup>
-									<div key={property.id} className="popupContainer">
-          					<img src={property.images[0]} alt="" />
+									<div key={property._id} className="popupContainer">
+          					<img src={property.post.images[0]} alt="" />
           					<div className="textContainer">
-            					<Link /*to={`/${property.id}`}*/> {property.title}</Link>
-            					<span>{property.bedroom} bedroom</span>
-            					<b>$ {property.price}</b>
+            					<Link /*to={`/${property.id}`}*/> {property.post.title}</Link>
+            					<span>{property.post.bedRoom} bedroom</span>
+            					<b>$ {property.post.price}</b>
           					</div>
         					</div>
 								</Popup>
     					</Marker>
 						)
-					})
+					}) : ""
 				}
   		</MapContainer>
 			</div>

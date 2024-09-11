@@ -33,4 +33,35 @@ const signInApi = async (bodyObject, setlOadingFunc) => {
 	}
 }
 
-export {signInApi}
+/**
+ * Api Call to determine whether token is valid or not
+ *
+ * Return: json object holds the response
+ */
+
+const tokenValidApi = async (token, setLoading) => {
+	try {
+		const response = await fetch("http://localhost:8000/api/auth/sign-in", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				"authorization": `Bearer ${token}`
+			}
+		})
+
+		const jsonObj = await response.json()
+		
+		setLoading(false)
+		return (jsonObj)
+	} catch (err) {
+		setLoading(false)
+		const error = new Error(err)
+		return ({
+			succes: false,
+			message: error.message,
+			name: error.name
+		})
+	}
+}
+
+export {signInApi, tokenValidApi}

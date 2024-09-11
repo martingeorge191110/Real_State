@@ -10,4 +10,16 @@ const newPostResp = (message, response) => {
    }))
 } 
 
-export {newPostResp}
+/**
+ * Function to respose with the searching Requirements
+ */
+
+const resAllProperties = (respose, jsonArray) => {
+   return (respose.status(200).json({
+      succes: true,
+      message: "Succesfuly Found!",
+      data: jsonArray
+   }))
+}
+
+export {newPostResp, resAllProperties}

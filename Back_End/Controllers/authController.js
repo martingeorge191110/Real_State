@@ -1,10 +1,12 @@
 import User from "../Modules/User.js";
+import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import { isEmailValid } from "../Validators/emailValidator.js";
 import { nameUpperCase } from "../Validators/stringValid.js";
 import { authResponse, comparePass, createToken, findUser, hashingPassword } from "../Utils/authHelper.js";
 import {sendMail, sendMailRestPass} from "../Utils/mailHelper.js";
 import { signInValidator, signUpValidator } from "../Validators/authValidateor.js";
+import { createError } from "../Validators/createError.js";
 
 dotenv.config()
 
@@ -182,5 +184,26 @@ const resetPssword = async (req, res, next) => {
 	}
 }
 
+/**
+ * Controller to check of token Validation each Time user open the website
+ */
 
-export {singUp, signIn, sendGenCode, resetPssword}
+const authValidation = async (req, res, next) => {
+	const {authorization} = req.headers
+	const token = authorization.split(" ")[1]
+
+	try {
+		jwt.verify(token, process.env.JWT_SECRET, (err) => {
+			if (err) {
+				const newErr = createError("Token is not Valid!", 403)
+				return (next(newErr))
+			}
+			return (authResponse(res, 200, token, "Token still Valid!"))
+		})
+	} catch (err) {
+		const newErr = createError("Something Went Wrong!", 500)
+		return (next(newErr))
+	}
+}
+
+export {singUp, signIn, sendGenCode, resetPssword, authValidation}

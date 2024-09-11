@@ -1,6 +1,7 @@
 import Property from "../Modules/property.js";
 import User from "../Modules/User.js";
-import { newPostResp } from "../Utils/propertyResponse.js";
+import { newPostResp, resAllProperties } from "../Utils/propertyResponse.js";
+import orgData from "../Utils/propOrgData.js";
 import { createError } from "../Validators/createError.js";
 
 /**
@@ -60,10 +61,33 @@ const newPost = async (req, res, next) => {
 	  	return newPostResp("Successfully added new Post, Congrats!", res);
  
 	} catch (err) {
-	  console.error("Error in newPost function:", err);
 	  return next(createError("Something Went Wrong", 500));
 	}
  };
+
+/**
+ * Controller to search about Property posts
+ * query { city, min price, max price}
+ */
+
+const searchPosts = async (req, res, next) => {
+	const { city, minPrice, maxPrice } = req.query
+	try {
+		const propertiesArr = await Property.find({
+			"posts.city": city,
+			"posts.price": { $gte: Number(minPrice), $lte: Number(maxPrice)}
+		})
+
+		if (!propertiesArr)
+			return (next(createError("No Properties With desired Requirements", 404)))
+
+		/* Organizing data function */
+		const data = orgData(propertiesArr)
+		return (resAllProperties(res, data))
+	} catch (err) {
+		return (next(createError("Something Went Wrong", 500)));
+	}
+}
  
- export { newPost };
+export { newPost, searchPosts };
  
