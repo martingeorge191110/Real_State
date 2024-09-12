@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './searchList.css';
-import { listData } from '../../Data/searchData';
 import { FaMapMarkerAlt, FaBed, FaBath, FaHeart, FaCommentDots } from 'react-icons/fa';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import "leaflet/dist/leaflet.css";

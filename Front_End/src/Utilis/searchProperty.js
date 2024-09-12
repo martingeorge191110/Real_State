@@ -1,4 +1,3 @@
-
 class PropSearchObj {
    constructor (cityLocation, minPrice, maxPrice) {
       this.cityLocation = cityLocation
@@ -19,4 +18,16 @@ const searchProperties = (e, city, min, max) => {
    return (new PropSearchObj(city, min, max))
 }
 
-export {searchProperties}
+/**
+ * Search Input Validation
+ */
+
+const inputsValid = (...values) => {
+   for (let i = 0; i < values.length; i++)
+      if (!values[i] || values[i] === "")
+         return (false)
+
+   return (true)
+}
+
+export {searchProperties, inputsValid}

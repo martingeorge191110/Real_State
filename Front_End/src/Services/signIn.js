@@ -48,7 +48,7 @@ const tokenValidApi = async (token, setLoading) => {
 				"authorization": `Bearer ${token}`
 			}
 		})
-
+		
 		const jsonObj = await response.json()
 		
 		setLoading(false)
@@ -56,6 +56,7 @@ const tokenValidApi = async (token, setLoading) => {
 	} catch (err) {
 		setLoading(false)
 		const error = new Error(err)
+		console.log(error)
 		return ({
 			succes: false,
 			message: error.message,

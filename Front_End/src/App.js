@@ -25,8 +25,12 @@ function App() {
 	useEffect(() => {
 		if (tokenValid){
 			tokenValidApi(tokenValid, setLoading).then(
-				response => setAuthValidRes(response)
+				(response) => {
+					setAuthValidRes(response)
+				}
 			)
+		} else {
+			setLoading(false)
 		}
 	}, [])
 
@@ -46,7 +50,7 @@ function App() {
 				<Route path="/propertyList" exact component={tokenValid ? SearchList : ""}/>
 				<Route exact component={tokenValid ? MainPage : AuthPage}/>
 			</Switch>
-		</Router> : < AuthPage />) : <Loading/>}
+		</Router> : < AuthPage />) : <Loading color={"red"}/>}
 		</div>
 	 );
 }
