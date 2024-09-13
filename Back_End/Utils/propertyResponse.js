@@ -22,4 +22,5 @@ const resAllProperties = (respose, jsonArray) => {
    }))
 }
 
+
 export {newPostResp, resAllProperties}

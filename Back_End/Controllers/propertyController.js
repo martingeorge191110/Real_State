@@ -1,7 +1,7 @@
 import Property from "../Modules/property.js";
 import User from "../Modules/User.js";
 import { newPostResp, resAllProperties } from "../Utils/propertyResponse.js";
-import orgData from "../Utils/propOrgData.js";
+import {orgData, getPostInf} from "../Utils/propOrgData.js";
 import { createError } from "../Validators/createError.js";
 
 /**
@@ -89,5 +89,29 @@ const searchPosts = async (req, res, next) => {
 	}
 }
  
-export { newPost, searchPosts };
+/**
+ * Controller for Searching about just one post
+ */
+
+const SearchOnePost = async (req, res, next) => {
+	const { id } = req.params
+
+	try {
+		const findPost = await Property.findOne({
+			"posts._id": id
+		}).select("userId").select("posts")
+
+		const result = await getPostInf(id, findPost.posts)
+		return (resAllProperties(res, {
+			userId: findPost.userId,
+			post: result
+		}))
+	} catch (err) {
+		const newErr = new Error(err)
+		return (next(createError(newErr.message, 500)))
+	}
+}
+
+
+export { newPost, searchPosts, SearchOnePost};
  

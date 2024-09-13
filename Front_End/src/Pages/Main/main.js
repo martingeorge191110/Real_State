@@ -81,8 +81,8 @@ const MainPage = () => {
 								setCityValid(false)
 							changeInputValue(e.currentTarget.value, setLocation)
 							}} type="text" className='search-bar' value={location} placeholder="City Location" required/>
-						<input onChange={(e) => changeInputValue(Number(e.currentTarget.value), setMinPrice)} value={minPrice} type="number" className='search-bar' placeholder="Min Price"/>
-						<input onChange={(e) => changeInputValue(Number(e.currentTarget.value), setMaxPrice)} value={maxPrice} type="number" className='search-bar' placeholder="Max Price"/>
+						<input onChange={(e) => changeInputValue(Number(e.currentTarget.value), setMinPrice)} defaultValue={null} type="number" className='search-bar' placeholder="Min Price"/>
+						<input onChange={(e) => changeInputValue(Number(e.currentTarget.value), setMaxPrice)} defaultValue={null}  type="number" className='search-bar' placeholder="Max Price"/>
 						<button onClick={(e) => {
 							if (!inputsValid(location))
 							{

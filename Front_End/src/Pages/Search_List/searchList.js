@@ -47,7 +47,7 @@ const SearchList = () => {
 		shadowUrl: imgUrl2,
 		shadowSize: [41, 41]
 	});
-
+console.log(resp)
 	return (
 		<>
 		<NavBar/>
@@ -75,7 +75,7 @@ const SearchList = () => {
 					{ !loading ? ( 
 						resp && resp.succes && resp.data && resp.data.length > 0 ? resp.data.map((property) => {
 						return (
-							<div key={property._id} className="search-result-item">
+							<div key={property.post._id} className="search-result-item">
 								<img src={property.post.images[0]} alt="Property" className="result-img" />
 								<div className="result-details">
 									<h3 className="result-title">{property.post.title}</h3>
@@ -106,7 +106,7 @@ const SearchList = () => {
 				</div>
 			</div>
 			<div className="map-section">
-			<MapContainer center={position} zoom={7} style={{ width: "80%", height: "100vh", borderRadius:"1rem"}}>
+			<MapContainer center={position} zoom={7} style={{ position: "absolute", top: "0" , width: "80%", height: "100vh", borderRadius:"1rem"}}>
     		<TileLayer
       		url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       		attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -116,10 +116,10 @@ const SearchList = () => {
 						return (
 							<Marker position={[property.post.latitude, property.post.longitude]} icon={customIcon}>
       					<Popup>
-									<div key={property._id} className="popupContainer">
+								<div key={property._id} className="popupContainer">
           					<img src={property.post.images[0]} alt="" />
           					<div className="textContainer">
-            					<Link /*to={`/${property.id}`}*/> {property.post.title}</Link>
+            					<Link to={`/propertyList/${property.post._id}`}> {property.post.title}</Link>
             					<span>{property.post.bedRoom} bedroom</span>
             					<b>$ {property.post.price}</b>
           					</div>

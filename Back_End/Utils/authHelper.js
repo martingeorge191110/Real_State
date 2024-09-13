@@ -27,12 +27,17 @@ const findUser = async (email = null, id = null) => {
 	try{
 		const user = await User.findOne({
 			[validator]: value
-		})
+		}).select("-password")
 
-		return (user)
+		return ({
+			succes: true,
+			data: user
+		})
 	} catch (error) {
-		console.error("Error finding user:", err);
-		throw new Error("Database query failed");
+		return ({
+			succes: false,
+			data: null
+		});
 	}
 }
 

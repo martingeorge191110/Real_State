@@ -1,10 +1,14 @@
 import React, {useRef} from "react";
 import './navbar.css'
+import { useDispatch } from "react-redux";
+import { logOutAction } from "../../Store/action";
 
 const NavBar = () => {
 
 	/* Profile list using ref */
 	const profileList = useRef(null)
+	/* Dispatch for log out */
+	const dispatch = useDispatch()
 	
 
 	return (
@@ -42,7 +46,10 @@ const NavBar = () => {
 					  		<li className="navbar-profile-dropdown-item">Profile Item 1</li>
 					  		<li className="navbar-profile-dropdown-item">Profile Item 2</li>
 					  		<li className="navbar-profile-dropdown-item">Profile Item 3</li>
-					  	<li className="navbar-profile-dropdown-item">Logout</li>
+					  	<li onClick={() => {
+							localStorage.removeItem("token")
+							dispatch(logOutAction())
+						}} className="navbar-profile-dropdown-item">Logout</li>
 						</ul>
 				 	}
 			  	</li>

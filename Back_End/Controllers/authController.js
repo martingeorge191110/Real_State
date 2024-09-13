@@ -206,4 +206,24 @@ const authValidation = async (req, res, next) => {
 	}
 }
 
-export {singUp, signIn, sendGenCode, resetPssword, authValidation}
+/**
+ * Controller to get user Data
+ */
+
+const profile = async (req, res, next) => {
+	const {_id} = req
+
+	try {
+		const userInfo = await findUser(null, _id)
+		
+		if (userInfo.succes)
+			return (res.status(200).json({
+				...userInfo
+			}))
+	} catch (err) {
+		const newErr = new Error(err)
+		return (next(newErr))
+	}
+}
+
+export {singUp, signIn, sendGenCode, resetPssword, authValidation, profile}

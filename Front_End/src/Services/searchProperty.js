@@ -40,4 +40,34 @@ const searchPropApi = async (city, minP, maxP, token, setLoading) => {
 	}
 }
 
-export { searchPropApi }
+/**
+ * Api Call for getting post information
+ *
+ * Return: (json object holds post details)
+ */
+
+const onePostApi = async (postId, token, setLoading) => {
+	try {
+		const response = await fetch(`http://localhost:8000/api/property/post/${postId}`, {
+			method :"GET",
+			headers: {
+				"Content-Type": "application/json",
+				"authorization": `Bearer ${token}`
+			}
+		})
+
+		const jsonObj = await response.json()
+		setLoading(false)
+		return (jsonObj)
+	} catch (err) {
+		const error = new Error(err)
+		setLoading(false)
+		return ({
+			succes: false,
+			message: new Error(err).message,
+			data: error.name
+		})
+	}
+}
+
+export { searchPropApi, onePostApi}

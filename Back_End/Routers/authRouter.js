@@ -1,5 +1,6 @@
 import express from "express"
-import { authValidation, resetPssword, sendGenCode, signIn, singUp } from "../Controllers/authController.js"
+import { authValidation, profile, resetPssword, sendGenCode, signIn, singUp } from "../Controllers/authController.js"
+import verifyToken from "../Middlewares/tokenVerification.js"
 
 const Auth = express.Router()
 
@@ -14,5 +15,9 @@ Auth.route("/mail-gen-code").post(sendGenCode)
 
 /* Updating password after make sure about genCode */
 Auth.route("/resetPass").put(resetPssword)
+
+Auth.use(verifyToken)
+/* User Profile Api */
+Auth.route("/profile").get(profile)
 
 export default Auth

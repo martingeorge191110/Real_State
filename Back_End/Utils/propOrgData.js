@@ -18,4 +18,15 @@ const orgData = (respObj) => {
    return (arr)
 }
 
-export default orgData
+const getPostInf = (id, postsArr) => {
+   let result
+   for (const post of postsArr) {
+      if (post._id.toString() === id) {
+         result = post;
+         break;
+      }
+   }
+   return result;
+}
+
+export {orgData, getPostInf}

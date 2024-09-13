@@ -30,6 +30,17 @@ const signInAction = (token) => {
 }
 
 /**
+ * Log Out Action
+ */
+const logOutAction = () => {
+	const action = new Action("LOG_OUT", null)
+
+	return ({
+		...action
+	})
+}
+
+/**
  * Action Function to set new searching property object
  * {
  * 	location city,
@@ -46,4 +57,4 @@ const propSearchAction = (object) => {
 	})
 }
 
-export {signUpAction, signInAction, propSearchAction}
+export {signUpAction, signInAction, propSearchAction, logOutAction}

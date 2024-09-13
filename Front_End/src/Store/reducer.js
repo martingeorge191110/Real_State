@@ -17,6 +17,8 @@ const AppReducer = (state = appStateStore, action) => {
 		return {...state, token: action.payload}
 	if (action.type === "PROP_SEARCH")
 		return {...state, searchProp: action.payload}
+	if (action.type === "LOG_OUT")
+		return {...state, token: action.payload}
 
 	return state
 }

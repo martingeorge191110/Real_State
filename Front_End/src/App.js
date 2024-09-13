@@ -12,6 +12,7 @@ import SearchList from "./Pages/Search_List/searchList";
 import { useEffect, useState } from "react";
 import { tokenValidApi } from "./Services/signIn.js";
 import Loading from "./Components/Loading.js/loading.js";
+import Post from "./Pages/Single_Post/post.js";
 
 
 
@@ -48,6 +49,7 @@ function App() {
 			{/* {tokenValid ? <NavBar/> : ""} */}
 			<Switch>
 				<Route path="/propertyList" exact component={tokenValid ? SearchList : ""}/>
+				<Route path="/propertyList/:id" exact component={tokenValid ? Post : ""}/>
 				<Route exact component={tokenValid ? MainPage : AuthPage}/>
 			</Switch>
 		</Router> : < AuthPage />) : <Loading color={"red"}/>}
