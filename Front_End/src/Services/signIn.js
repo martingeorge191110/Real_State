@@ -39,7 +39,7 @@ const signInApi = async (bodyObject, setlOadingFunc) => {
  * Return: json object holds the response
  */
 
-const tokenValidApi = async (token, setLoading) => {
+const tokenValidApi = async (token) => {
 	try {
 		const response = await fetch("http://localhost:8000/api/auth/sign-in", {
 			method: "GET",
@@ -51,10 +51,8 @@ const tokenValidApi = async (token, setLoading) => {
 		
 		const jsonObj = await response.json()
 		
-		setLoading(false)
 		return (jsonObj)
 	} catch (err) {
-		setLoading(false)
 		const error = new Error(err)
 		console.log(error)
 		return ({

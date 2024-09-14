@@ -57,4 +57,16 @@ const propSearchAction = (object) => {
 	})
 }
 
-export {signUpAction, signInAction, propSearchAction, logOutAction}
+/**
+ * Action to get user Infromation after oppening the application
+ */
+
+const staticUserInfAction = (useInfObj) => {
+	const action = new Action("USER_INF", useInfObj)
+
+	return ({
+		...action
+	})
+}
+
+export {signUpAction, signInAction, propSearchAction, logOutAction, staticUserInfAction}

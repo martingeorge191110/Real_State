@@ -6,6 +6,7 @@ import dotenv from 'dotenv'
 import Auth from "./Routers/authRouter.js";
 import HandleError from "./Middlewares/errorHandling.js";
 import PropertyInf from "./Routers/propertyRouter.js";
+import UserInfo from "./Routers/userRouter.js";
 
 /* Server Variable */
 const server = express()
@@ -38,6 +39,9 @@ server.use("/api/auth", Auth)
 
 /* Post a new property middleware */
 server.use("/api/property", PropertyInf)
+
+/* User Router */
+server.use("/api/users", UserInfo)
 
 /* Erro Handling MiddleWare */
 server.use("*", HandleError);

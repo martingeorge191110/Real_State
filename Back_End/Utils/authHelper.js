@@ -27,17 +27,20 @@ const findUser = async (email = null, id = null) => {
 	try{
 		const user = await User.findOne({
 			[validator]: value
-		}).select("-password")
+		})
 
 		return ({
 			succes: true,
+			message: "Operation, Successfuly!",
 			data: user
 		})
 	} catch (error) {
+		const newErr = new Error(error)
 		return ({
 			succes: false,
+			message: newErr.message,
 			data: null
-		});
+		})
 	}
 }
 

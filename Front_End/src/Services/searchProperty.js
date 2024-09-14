@@ -46,7 +46,7 @@ const searchPropApi = async (city, minP, maxP, token, setLoading) => {
  * Return: (json object holds post details)
  */
 
-const onePostApi = async (postId, token, setLoading) => {
+const onePostApi = async (postId, token ) => {
 	try {
 		const response = await fetch(`http://localhost:8000/api/property/post/${postId}`, {
 			method :"GET",
@@ -57,11 +57,9 @@ const onePostApi = async (postId, token, setLoading) => {
 		})
 
 		const jsonObj = await response.json()
-		setLoading(false)
 		return (jsonObj)
 	} catch (err) {
 		const error = new Error(err)
-		setLoading(false)
 		return ({
 			succes: false,
 			message: new Error(err).message,

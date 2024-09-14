@@ -16,12 +16,12 @@
    padding: 2rem;
  }
  
- .images-section {
+ .real-estate-post .images-section {
    width: 100%;
    margin-bottom: 1rem;
  }
  
- .main-image {
+ .real-estate-post .main-image {
    width: 45%;
    height: 200px;
    max-height: 400px;

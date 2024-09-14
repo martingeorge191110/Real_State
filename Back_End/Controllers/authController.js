@@ -70,23 +70,24 @@ const signIn = async (req, res, next) => {
 	try {
 		/* Find the user account at first with user email and handle error */
 		const findUserAcc = await findUser(useremail);
+
 		if (!findUserAcc)
 		{
 			const newError = new Error ("Email Address is not Found, Register Now");
 			newError.statusCode = 404;
 			return (next(newError));
 		}
+
 		/* if user email found, compare password with hashed password */
-		if (!comparePass(password, findUserAcc.password)) {
+		if (!comparePass(password, findUserAcc.data.password)) {
 			const newError = new Error ("Password is not correct");
 			newError.statusCode = 409;
 			return (next(newError));
 		}
 		/* if user email and password correct create token and return the response */
-		const token = createToken(useremail, findUserAcc._id);
-
+		const token = createToken(useremail, findUserAcc.data._id);
 		/* Send Mail, Welcome to User */
-		const mailChecks = await sendMail(useremail, findUserAcc.username)
+		const mailChecks = await sendMail(useremail, findUserAcc.data.username)
 
 		return (authResponse(res, 200, token, mailChecks ? "Signed in and Mail to the user sent Succesfully" : "Signed in, Succesfully without sent mails"));
 	} catch (err) {
@@ -154,7 +155,6 @@ const resetPssword = async (req, res, next) => {
 
 	/* Check user information validation */
 	const checkValidators = signInValidator(useremail, password)
-	console.log(checkValidators)
 	if (checkValidators !== null)
 		return (next(checkValidators))
 
@@ -206,24 +206,4 @@ const authValidation = async (req, res, next) => {
 	}
 }
 
-/**
- * Controller to get user Data
- */
-
-const profile = async (req, res, next) => {
-	const {_id} = req
-
-	try {
-		const userInfo = await findUser(null, _id)
-		
-		if (userInfo.succes)
-			return (res.status(200).json({
-				...userInfo
-			}))
-	} catch (err) {
-		const newErr = new Error(err)
-		return (next(newErr))
-	}
-}
-
-export {singUp, signIn, sendGenCode, resetPssword, authValidation, profile}
+export {singUp, signIn, sendGenCode, resetPssword, authValidation}

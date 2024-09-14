@@ -194,6 +194,7 @@
  .main-image {
 	max-width: 70%;
 	border-radius: 10px;
+	transition: 0.3s;
 	}
  
  /* Animations */

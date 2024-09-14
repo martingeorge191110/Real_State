@@ -2,6 +2,7 @@ import React, {useRef} from "react";
 import './navbar.css'
 import { useDispatch } from "react-redux";
 import { logOutAction } from "../../Store/action";
+import { useSelector } from "react-redux";
 
 const NavBar = () => {
 
@@ -9,7 +10,11 @@ const NavBar = () => {
 	const profileList = useRef(null)
 	/* Dispatch for log out */
 	const dispatch = useDispatch()
-	
+	/* Select User Infromation Item */
+	const userInfo = useSelector(
+		state => state.staticUserInf
+	)
+
 
 	return (
 	  <nav className="navbar">
@@ -39,13 +44,11 @@ const NavBar = () => {
 			  	>
 				 	<div className="navbar-profile-container">
 						<img src={''} alt="Profile" className="navbar-profile-pic" />
-						<span className="navbar-profile-name">User Name</span>
+						<span className="navbar-profile-name">{userInfo.username}</span>
 				 	</div>
 				 	{
 						<ul ref={profileList} className="navbar-profile-dropdown">
-					  		<li className="navbar-profile-dropdown-item">Profile Item 1</li>
-					  		<li className="navbar-profile-dropdown-item">Profile Item 2</li>
-					  		<li className="navbar-profile-dropdown-item">Profile Item 3</li>
+					  		<li className="navbar-profile-dropdown-item">My Profile</li>
 					  	<li onClick={() => {
 							localStorage.removeItem("token")
 							dispatch(logOutAction())
