@@ -19,4 +19,32 @@ const nameUpperCase = (userName) => {
 	return (result)
 }
 
-export {nameUpperCase}
+/**
+ * Function to Make Sure About the type of the message
+ */
+
+const messTypeValidator = (type, message) => {
+	if (type !== "text" && type !== "media")
+		return ({
+			message: "Type Is Not Exist",
+			succes: false
+		})
+
+	if (type === "text" && !message)
+		return ({
+			message: "Message is not Defined withv type Text",
+			succes: false
+		})
+
+	if (type === "media" && !message)
+		return ({
+			message: "Message is not Defined withv type Media",
+			succes: false
+		})
+	
+	return ({
+		succes: true
+	})
+}
+
+export {nameUpperCase, messTypeValidator}

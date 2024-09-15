@@ -7,6 +7,7 @@ import Auth from "./Routers/authRouter.js";
 import HandleError from "./Middlewares/errorHandling.js";
 import PropertyInf from "./Routers/propertyRouter.js";
 import UserInfo from "./Routers/userRouter.js";
+import chatInfo from "./Routers/chatRouter.js";
 
 /* Server Variable */
 const server = express()
@@ -42,6 +43,9 @@ server.use("/api/property", PropertyInf)
 
 /* User Router */
 server.use("/api/users", UserInfo)
+
+/* User Chat Router */
+server.use("/api/chat", chatInfo)
 
 /* Erro Handling MiddleWare */
 server.use("*", HandleError);
