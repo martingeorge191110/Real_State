@@ -3,9 +3,11 @@ import './navbar.css'
 import { useDispatch } from "react-redux";
 import { logOutAction } from "../../Store/action";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 const NavBar = () => {
-
+	const history = useHistory()
 	/* Profile list using ref */
 	const profileList = useRef(null)
 	/* Dispatch for log out */
@@ -14,6 +16,7 @@ const NavBar = () => {
 	const userInfo = useSelector(
 		state => state.staticUserInf
 	)
+
 
 
 	return (
@@ -44,14 +47,17 @@ const NavBar = () => {
 			  	>
 				 	<div className="navbar-profile-container">
 						<img src={''} alt="Profile" className="navbar-profile-pic" />
-						<span className="navbar-profile-name">{userInfo.username}</span>
+						<span className="navbar-profile-name">{userInfo ? userInfo.username : ""}</span>
 				 	</div>
 				 	{
 						<ul ref={profileList} className="navbar-profile-dropdown">
-					  		<li className="navbar-profile-dropdown-item">My Profile</li>
+					  		<li className="navbar-profile-dropdown-item"><Link to="/profile">My Profile</Link></li>
 					  	<li onClick={() => {
 							localStorage.removeItem("token")
 							dispatch(logOutAction())
+							history.push({
+								pathname: "/"
+							})
 						}} className="navbar-profile-dropdown-item">Logout</li>
 						</ul>
 				 	}

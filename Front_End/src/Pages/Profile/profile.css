@@ -218,19 +218,38 @@
  
  /* Chat section styles */
  .chat-section {
-   margin-top: 2rem;
+   /* margin-top: 2rem;
    max-height: 400px;
    display: flex;
-   flex-direction: column;
+   flex-direction: column; */
+   margin-top: 2rem;
+  max-height: 400px; /* Limits height of the entire chat section */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevents overflow from affecting body */
  }
  
  .chat-messages {
-   padding: 1rem;
-   background-color: #f9f9f9;
-   border-radius: 10px;
-   flex: 1;
-   overflow-y: auto;
-   margin-bottom: 1rem;
+  /* padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  flex: 1 1;
+  display: flex;
+  overflow-y: auto;
+  max-height: 100px;
+  margin-bottom: 1rem;
+  flex-direction: column;
+  align-items: flex-end; */
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  flex: 1 1 auto; /* Allows it to grow within its container */
+  display: flex;
+  overflow: scroll; /* Enables scrolling for messages */
+  max-height: 300px; /* Adjust max height to be more appropriate */
+  margin-bottom: 1rem;
+  flex-direction: column;
+  align-items: flex-start; /* Aligns messages to the start */
  }
  
  .no-chat-placeholder {
@@ -241,11 +260,26 @@
  }
  
  .chat-message {
-   padding: 0.5rem;
-   border-radius: 10px;
-   margin-bottom: 0.5rem;
+  border-radius: 10px;
+    margin-bottom: 0.5rem;
+    padding: 0.4rem;
+    min-width: 50%;
+    max-height: 4.2rem;
+    flex-direction: column;
+    display: flex;
+    animation: moving 0.3s ease-in-out;
+    justify-content: space-between;
+    align-items: baseline;
+ }
+ .chat-message p {
+  margin: 0.3rem;
+  padding: 0;
  }
  
+ @keyframes moving {
+  from { transform: translateY(100px); opacity: 0; }
+  to { transform: translateY(0px); opacity: 1; }
+ }
  .chat-message.sent {
    background-color: #0073e6;
    color: white;

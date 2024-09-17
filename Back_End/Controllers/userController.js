@@ -1,4 +1,5 @@
 // import User from '../Modules/User.js';
+import User from "../Modules/User.js"
 import { findUser } from "../Utils/authHelper.js"
 
 /**
@@ -24,4 +25,67 @@ const userInfo = async (req, res, next) => {
 	}
 }
 
-export {userInfo}
+/**
+ * Controller to get user information with id not token
+ */
+
+const getuserById = async (req, res, next) => {
+   const {usersId} = req.params
+
+   const usersIdArr = usersId.split(",") || [usersId]
+   console.log(usersIdArr)
+   try {
+      const userInf = await User.find({
+         _id: {
+            $in: usersIdArr
+         }
+      }).select('-password -__v -createdTime')
+
+      return (res.status(200).json({
+         succes: true,
+         message: "User Information Founded",
+         data: userInf
+      }))
+   } catch (err) {
+      const newErr = new Error(err)
+		return (next(newErr))
+   }
+}
+
+/**
+ * Contoller To update user Infromation
+ */
+
+const updateUser = async (req, res, next) => {
+   const {_id} = req
+   const {username, avatar} = req.body
+
+   if (!username || username === "" || username.length < 4)
+   try {
+      const user = await User.updateOne({
+         _id: _id
+      }, {
+         username: username,
+         avatar: avatar
+      }, {
+         runValidators: true
+      }).select('-password')
+   
+      if (!user) {
+         const newErr = new Error("Failed to Update user data")
+         newErr.statusCode = 403
+         return (next(newErr))
+      }
+
+      return (res.status(200).json({
+         succes: true,
+         message: "Data has been Updated, Succesfuly!",
+         data: user
+      }))
+   } catch (err) {
+      const newErr = new Error(err)
+		return (next(newErr))
+   }
+}
+
+export {userInfo, getuserById, updateUser}

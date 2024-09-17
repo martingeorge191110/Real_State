@@ -43,7 +43,7 @@ const sendMessage = async (req, res, next) => {
       }
 
       const userChatUpdated = await UserChat.updateOne({
-         participates: [_id, recieverId]
+         participates: { $all: [_id, recieverId] }
       }, {
          $push: {
             messages: {
@@ -52,7 +52,7 @@ const sendMessage = async (req, res, next) => {
                text: messType === "text" ? message : undefined,
                media: messType === "media" ? message : undefined,
                seenBy: [_id]
-            } 
+            }
          }
       }, {
          runValidators: true
@@ -62,6 +62,7 @@ const sendMessage = async (req, res, next) => {
                $all: [_id, recieverId]
             }
       })
+   
       const messageRes = lastMess.messages[lastMess.messages.length - 1]
       return chatResSuccessfuly(res, "Message Send Succesfuly", 200, messageRes, true)
    } catch (err) {
@@ -97,4 +98,29 @@ const getMessages = async (req, res, next) => {
    }
 }
 
-export {sendMessage, getMessages}
+/**
+ * Controller to get all of User Chats
+ */
+
+const retrieveUserChats = async (req, res, next) => {
+   const {_id} = req
+
+   try {
+      const chats = await UserChat.find({
+         participates: {
+            $all: [_id]
+         }
+      }).select({'participates':{ $elemMatch: { $ne: _id } } })
+
+      if (!chats)
+         return (chatResSuccessfuly(res, "User Has not any Conversation", 404, null, true))
+      
+      return (
+         chatResSuccessfuly(res, "User chats Retrieved, Succefuly!", 200, chats, true)
+      )
+   } catch (err) {
+      const newErr = new Error(err)
+      return (next(newErr))
+   }
+}
+export {sendMessage, getMessages, retrieveUserChats}

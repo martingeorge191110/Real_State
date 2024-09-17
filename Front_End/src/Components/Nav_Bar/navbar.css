@@ -131,12 +131,15 @@
  }
  .navbar-profile-dropdown-item {
 	padding: 12px 20px;
-	color: white;
-	text-decoration: none;
 	display: block;
 	width: 10rem;
 	padding: 1rem 2rem;
 	transition: background-color 0.3s ease;
+ }
+ .navbar-profile-dropdown-item a{
+	color: white;
+	text-decoration: none;
+	display: block;
  }
  
  .navbar-profile-dropdown-item:hover {

@@ -69,4 +69,18 @@ const staticUserInfAction = (useInfObj) => {
 	})
 }
 
-export {signUpAction, signInAction, propSearchAction, logOutAction, staticUserInfAction}
+/**
+ * Action to store chat information (other users information and chat ids)
+ */
+
+const chatInfAction = (arrayOfChats) => {
+	const action = new Action("CHAT_INF", arrayOfChats)
+
+	return ({
+		...action
+	})
+}
+
+export {signUpAction, signInAction,
+	propSearchAction, logOutAction,
+	staticUserInfAction, chatInfAction}

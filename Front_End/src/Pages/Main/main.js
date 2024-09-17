@@ -113,7 +113,7 @@ const MainPage = () => {
 			 	</div>
 		  	</div>
 		  		<div className="image-section">
-			 	<img src={image} alt="Real Estate" className="main-image" />
+			 	<img src={image || ""} alt="Real Estate" className="main-image" />
 		  		</div>
 			</div>
 		</section>
