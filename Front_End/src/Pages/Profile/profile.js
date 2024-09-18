@@ -2,13 +2,13 @@ import React, { useEffect, useState} from "react";
 import NavBar from "../../Components/Nav_Bar/navbar";
 import './profile.css'
 import { FaMapMarkerAlt, FaBed, FaBath, FaHeart, FaCommentDots, FaPen, FaPlus, FaPaperPlane } from 'react-icons/fa';
-import { userData } from "../../Data/searchData";
+// import { userData } from "../../Data/searchData";
 import { useSelector } from "react-redux";
 import { userDataApi, usersInfromation } from "../../Services/userData";
 import { getOneChat, getUsersIdFromChats } from "../../Services/chatApiHandler";
 import Loading from "../../Components/Loading.js/loading";
 import Chat from "../../Components/Chat/chat";
-import UpdateProfile from "../../Components/updateUserInf.js/updateUser";
+import UpdateProfile from "../../Components/UpdateUserInf/updateUser";
 
 const Profile = () => {
    const [selectedChat, setSelectedChat] = useState(null);
@@ -96,7 +96,6 @@ const Profile = () => {
        },
      },
    ];
- 
 
    return (
       mainUser ?
@@ -107,14 +106,14 @@ const Profile = () => {
         <div className="user-info-section">
           <div className="section-title">
             <h2>User Information</h2>
-            <button onClick={() => setUpdateInf(!updateInf)} className="update-button"><FaPen /> Update Profile</button>
+            <button onClick={() => { setUpdateInf(!updateInf)}} className="update-button"><FaPen /> Update Profile</button>
           </div>
           <div className="user-details">
             <div className="user-photo-placeholder"><img src=""></img></div>
             <p className="username">{mainUser.username}</p>
             <p className="user-email">{mainUser.useremail}</p>
           </div>
-          {updateInf && <UpdateProfile setUpdateInfo={setUpdateInf}/>}
+          {updateInf ? <UpdateProfile setUpdateInfo={setUpdateInf}/> : ""}
         </div>
         <div className="user-posts-section">
           <div className="section-title">
