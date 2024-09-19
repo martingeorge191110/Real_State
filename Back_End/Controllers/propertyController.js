@@ -97,6 +97,7 @@ const SearchOnePost = async (req, res, next) => {
 	const { id } = req.params
 
 	try {
+		console.log(id)
 		const findPost = await Property.findOne({
 			"posts._id": id
 		}).select("userId").select("posts")
@@ -112,6 +113,30 @@ const SearchOnePost = async (req, res, next) => {
 	}
 }
 
+/**
+ * Api Call to get all user Posts
+ */
 
-export { newPost, searchPosts, SearchOnePost};
+const userPosts = async (req, res, next) => {
+	const {_id} = req
+
+	try {
+		const userProperties = await Property.findOne({
+			userId: _id
+		})
+
+		if (!userProperties) {
+			const newError = new Error("No Posts Yet, Write Your First Post")
+			newError.statusCode = 404
+			return (next(newError))
+		}
+
+		return (resAllProperties(res, userProperties))
+	} catch (err) {
+		const newErr = new Error(err)
+		return (next(newErr))
+	}
+}
+
+export { newPost, searchPosts, SearchOnePost, userPosts};
  

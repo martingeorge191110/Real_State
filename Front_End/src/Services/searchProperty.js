@@ -68,4 +68,30 @@ const onePostApi = async (postId, token ) => {
 	}
 }
 
-export { searchPropApi, onePostApi}
+/**
+ * Api Call to get user posts
+ */
+
+const userPostsApi = async (token) => {
+	try {
+		const response = await fetch("http://localhost:8000/api/property/post", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				"authorization": `Bearer ${token}`
+			}
+		})
+
+		const jsonObj = await response.json()
+		return (jsonObj)
+	} catch (err) {
+		const error = new Error(err)
+		return ({
+			succes: false,
+			message: new Error(err).message,
+			data: error.name
+		})
+	}
+}
+
+export { searchPropApi, onePostApi, userPostsApi}

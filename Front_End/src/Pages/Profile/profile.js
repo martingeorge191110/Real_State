@@ -9,6 +9,7 @@ import { getOneChat, getUsersIdFromChats } from "../../Services/chatApiHandler";
 import Loading from "../../Components/Loading.js/loading";
 import Chat from "../../Components/Chat/chat";
 import UpdateProfile from "../../Components/UpdateUserInf/updateUser";
+import { userPostsApi } from "../../Services/searchProperty";
 
 const Profile = () => {
    const [selectedChat, setSelectedChat] = useState(null);
@@ -38,6 +39,8 @@ const Profile = () => {
   }
 
   /* Create an array of users ids after rendering the page */
+  /* Get user Posts */
+  const [userPosts, setUserPosts] = useState(null)
   /* Gert user information from api call */
   const [mainUser, setMainUser] = useState(null)
   useEffect(() => {
@@ -50,6 +53,12 @@ const Profile = () => {
     if (token) {
       userDataApi(token).then(
         response => setMainUser(response.data)
+      )
+      userPostsApi(token).then(
+        response => {
+          // console.log(response.data.posts)
+          setUserPosts(response)
+        }
       )
     }
   }, [])
@@ -72,35 +81,35 @@ const Profile = () => {
   /* Update user informationb settings */
   const [updateInf, setUpdateInf] = useState(false)
 
-   const userPosts = [
-     {
-       post: {
-         _id: '1',
-         images: ['https://via.placeholder.com/150'],
-         title: 'Modern Apartment',
-         address: '456 Elm St, City, Country',
-         price: '250,000',
-         bedroom: 2,
-         bathroom: 2,
-       },
-     },
-     {
-       post: {
-         _id: '2',
-         images: ['https://via.placeholder.com/150'],
-         title: 'Cozy Cottage',
-         address: '789 Pine St, City, Country',
-         price: '150,000',
-         bedroom: 3,
-         bathroom: 1,
-       },
-     },
-   ];
+  //  const userPosts = [
+    //  {
+    //    post: {
+    //      _id: '1',
+    //      images: ['https://via.placeholder.com/150'],
+    //      title: 'Modern Apartment',
+    //      address: '456 Elm St, City, Country',
+    //      price: '250,000',
+    //      bedroom: 2,
+    //      bathroom: 2,
+    //    },
+    //  },
+    //  {
+    //    post: {
+    //      _id: '2',
+    //      images: ['https://via.placeholder.com/150'],
+    //      title: 'Cozy Cottage',
+    //      address: '789 Pine St, City, Country',
+    //      price: '150,000',
+    //      bedroom: 3,
+    //      bathroom: 1,
+    //    },
+    //  },
+  //  ];
 
    return (
       mainUser ?
         <>
-        <NavBar/>
+        <NavBar />
          <div className="user-profile">
       <div className="left-section">
         <div className="user-info-section">
@@ -109,11 +118,11 @@ const Profile = () => {
             <button onClick={() => { setUpdateInf(!updateInf)}} className="update-button"><FaPen /> Update Profile</button>
           </div>
           <div className="user-details">
-            <div className="user-photo-placeholder"><img src=""></img></div>
+            <div className="user-photo-placeholder"><img src={mainUser.avatar || ""}></img></div>
             <p className="username">{mainUser.username}</p>
             <p className="user-email">{mainUser.useremail}</p>
           </div>
-          {updateInf ? <UpdateProfile setUpdateInfo={setUpdateInf}/> : ""}
+          {updateInf ? <UpdateProfile setUpdateInfo={setUpdateInf} mainUser={mainUser} setMainUser={setMainUser}/> : ""}
         </div>
         <div className="user-posts-section">
           <div className="section-title">
@@ -121,7 +130,32 @@ const Profile = () => {
             <button className="add-button"><FaPlus /> Add New Post</button>
           </div>
           <div className="posts-list">
-            {userPosts.map((property) => (
+            {
+              userPosts && userPosts.succes && Array.isArray(userPosts.data.posts) ? 
+                userPosts.data.posts.map((property) => {
+                  return (
+                    <div key={property._id} className="search-result-item">
+                     <img src={property.images[0]} alt="Property" className="result-img" />
+                     <div className="result-details">
+                       <h3 className="result-title">{property.title}</h3>
+                        <p className="result-location"><FaMapMarkerAlt /> {property.address}</p>
+                        <p className="result-price">${property.price}</p>
+                        <div className="result-fet-act">
+                          <div className="result-features">
+                            <span><FaBed /> {property.bedroom}</span>
+                            <span><FaBath /> {property.bathroom}</span>
+                          </div>
+                          <div className="result-actions">
+                            <FaHeart className="result-icon" />
+                            <FaCommentDots className="result-icon" />
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+                  )
+                }):  ""
+            }
+            {/* {userPosts.posts.map((property) => (
               <div key={property.post._id} className="search-result-item">
                 <img src={property.post.images[0]} alt="Property" className="result-img" />
                 <div className="result-details">
@@ -140,7 +174,7 @@ const Profile = () => {
                   </div>
                 </div>
               </div>
-            ))}
+            ))} */}
           </div>
         </div>
       </div>
@@ -166,7 +200,7 @@ const Profile = () => {
           )) : ""}
         </div>
         {selectedChat !== null ? (
-          <Chat avatar={''} userName={selectedChat.userName} messArray={messContain} userId={selectedChat.userId}/>
+          <Chat avatar={selectedChat.avatar || ""} userName={selectedChat.userName} messArray={messContain} userId={selectedChat.userId}/>
         ) : ""}
       </div>
     </div>

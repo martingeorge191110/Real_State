@@ -1,36 +1,47 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './updateUser.css';
 import Loading from '../Loading.js/loading';
+import { storeImgApi, updateUserApi } from '../../Services/userData';
+import { useSelector } from 'react-redux';
 
-const UpdateProfile = ({ setUpdateInfo }) => {
+const UpdateProfile = ({ setUpdateInfo, mainUser, setMainUser }) => {
+  const token = useSelector(
+    state => state.token
+  )
+  const [username, setusername] = useState(mainUser.username)
+
   const [previewImage, setPreviewImage] = useState(null);
   const [file, setFile] = useState(null);
   const [dragging, setDragging] = useState(false);
 
   const fileInputRef = useRef(null);
 
+
   const [loading, setLoading] = useState(false)
   const clickSave = async () => {
-    if (!file) {
-      alert("Please select an image first");
-      return;
-    }
     setLoading(true)
-    console.log( "from file",file)
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', 'Real State'); // Replace with your upload preset
-
     try {
-      const response = await fetch(`https://api.cloudinary.com/v1_1/${'daghpnbz3'}/image/upload`, {
-        method: 'POST',
-        body: formData,
-      });
-      const data = await response.json();
-      setFile(data.secure_url); // You can save this URL to your database or use it in your app
+
+      const imgUrlResponse = await storeImgApi(file)
+      // setFile(data.secure_url); // You can save this URL to your database or use it in your app
+      /* Check if the user did not add image or somthing went wrong */
+      console.log(imgUrlResponse)
+      if (imgUrlResponse.succes === false) {
+        setLoading(false)
+        return (imgUrlResponse.message)
+      }
+
+      const UpdateProfile = await updateUserApi(token, username, imgUrlResponse.imgUrl)
+      /* Check For Updating data Succesfuly */
+      if (!UpdateProfile.succes){
+        setLoading(false)
+        return (UpdateProfile.message)
+      }
+
+      setMainUser(UpdateProfile.data)
       setLoading(false)
       setUpdateInfo(false)
-      console.log('Uploaded Image URL:', data.secure_url);
+      return (null)
     } catch (error) {
       console.error('Error uploading image:', error);
     }
@@ -87,7 +98,7 @@ const UpdateProfile = ({ setUpdateInfo }) => {
         <form onSubmit={handleUpdateProfile}>
           <label>
             Name:
-            <input type="text" name="name" defaultValue="John Doe" required className="input-field" />
+            <input onChange={(e) => {setusername(e.currentTarget.value)}} type="text" name="name" value={username}  required className="input-field" />
           </label>
           <label className="image-upload-label">
             {previewImage ? (

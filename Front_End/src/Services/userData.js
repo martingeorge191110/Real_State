@@ -47,17 +47,68 @@ const usersInfromation = async (token, arrayOfIds) => {
 }
 
 /**
- * Api Call to Update user Infomration
+ * Api Call to store user image in Cloud Server (Cloudinary)
  */
 
-const updateUserApi = async(e, token) => {
-   e.preventDefault()
+const storeImgApi = async (file) => {
+   if (!file)
+      return ({
+         succes: false,
+         message: "Please Choose Image"
+         })
+
+   const formData = new FormData();
+   formData.append('file', file);
+   formData.append('upload_preset', 'Real State');
 
    try {
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${'daghpnbz3'}/image/upload`, {
+         method: 'POST',
+         body: formData,
+      });
+      const data = await response.json()
 
+      return ({
+         succes: true,
+         imgUrl: data.secure_url
+      })
    } catch (err) {
-
+      const newErr = new Error(err)
+      return ({
+         succes: false,
+         message: newErr.message
+      })
    }
 }
 
-export {userDataApi, usersInfromation}
+/**
+ * Api Call to Update user Infomration
+ */
+
+const updateUserApi = async(token, username, avatar) => {
+
+   try {
+      const response = await fetch("http://localhost:8000/api/users/profile", {
+         method: "PUT",
+         headers: {
+            "Content-Type": "application/json",
+            "authorization": `Bearer ${token}`
+         },
+         body: JSON.stringify({
+            username: username,
+            avatar: avatar
+         })
+      })
+
+      const jsonObj = await response.json()
+      return (jsonObj)
+   } catch (err) {
+      const newErr = new Error(err)
+      return ({
+         succes: false,
+         message: newErr.message
+      })
+   }
+}
+
+export {userDataApi, usersInfromation, storeImgApi, updateUserApi}

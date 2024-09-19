@@ -12,7 +12,6 @@ import L from "leaflet"
 import imgUrl1 from '../../Assets/marker-icon.png'
 import { FaMessage } from 'react-icons/fa6';
 import { userData } from '../../Data/searchData';
-
 const Post = () => {
    /* Select token from the store */
    const token = useSelector(
@@ -27,17 +26,19 @@ const Post = () => {
    const [apiSucces, setApiSucces] = useState(false)
    const [apiMessage, setApiMessage] = useState(null)
    useEffect(() => {
-      onePostApi(param.id, token, setLoading).then(
+      onePostApi(param.id, token).then(
          resObj => 
          {
             if (resObj.succes) {
                setApiData(resObj.data)
                setApiSucces(resObj.succes)
                setApiMessage(resObj.message)
+               setLoading(false)
             } else {
                setApiData(null)
                setApiSucces(resObj.succes)
                setApiMessage(resObj.message)
+               setLoading(false)
             }
          }
       )
