@@ -46,7 +46,7 @@ const NavBar = () => {
 					}
 			  	>
 				 	<div className="navbar-profile-container">
-						<img src={avatar || ""} alt="Profile" className="navbar-profile-pic" />
+						<img src={""} alt="Profile" className="navbar-profile-pic" />
 						<span className="navbar-profile-name">{userInfo ? userInfo.username : ""}</span>
 				 	</div>
 				 	{
