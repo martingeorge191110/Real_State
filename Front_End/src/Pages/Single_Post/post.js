@@ -12,6 +12,9 @@ import L from "leaflet"
 import imgUrl1 from '../../Assets/marker-icon.png'
 import { FaMessage } from 'react-icons/fa6';
 import { userData } from '../../Data/searchData';
+import { usersInfromation } from '../../Services/userData';
+
+
 const Post = () => {
    /* Select token from the store */
    const token = useSelector(
@@ -25,6 +28,8 @@ const Post = () => {
    const [apiData, setApiData] = useState(null)
    const [apiSucces, setApiSucces] = useState(false)
    const [apiMessage, setApiMessage] = useState(null)
+   const [user, setUser] = useState(userData)
+
    useEffect(() => {
       onePostApi(param.id, token).then(
          resObj => 
@@ -33,6 +38,9 @@ const Post = () => {
                setApiData(resObj.data)
                setApiSucces(resObj.succes)
                setApiMessage(resObj.message)
+               usersInfromation(token, [resObj.data.userId]).then(
+                  jsonObj => jsonObj.succes ? setUser(jsonObj.data[0]) : userData
+               )
                setLoading(false)
             } else {
                setApiData(null)
@@ -42,6 +50,7 @@ const Post = () => {
             }
          }
       )
+      // console.log(apiData.userId)
    }, [])
 
    const position = [51.505, -0.09]
@@ -77,8 +86,8 @@ const Post = () => {
          <div className="title-section">
            <h1 className="post-title">{apiData.post.title}</h1>
            <div className="owner-info">
-             <img src={userData.img} alt="Owner" className="owner-photo" />
-             <span className="owner-name">John Doe</span>
+             <img src={user.avatar} alt="Owner" className="owner-photo" />
+             <span className="owner-name">{user.username}</span>
            </div>
          </div>
          <p className="address"><FaMapMarkerAlt />{apiData.post.address}</p>

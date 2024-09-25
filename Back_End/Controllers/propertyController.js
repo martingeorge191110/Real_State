@@ -74,18 +74,23 @@ const searchPosts = async (req, res, next) => {
 	const { city, minPrice, maxPrice } = req.query
 	try {
 		const propertiesArr = await Property.find({
-			"posts.city": city,
-			"posts.price": { $gte: Number(minPrice), $lte: Number(maxPrice)}
+			posts: {
+				$elemMatch: {
+				  city: city,
+				  price: { $lte: Number(maxPrice) }
+				}
+			}
 		})
 
 		if (!propertiesArr)
 			return (next(createError("No Properties With desired Requirements", 404)))
 
 		/* Organizing data function */
-		const data = orgData(propertiesArr)
+		const data = orgData(propertiesArr, minPrice, maxPrice)
+		console.log(data)
 		return (resAllProperties(res, data))
 	} catch (err) {
-		return (next(createError("Something Went Wrong", 500)));
+		return (next(createError("Something Went Wrong")));
 	}
 }
  

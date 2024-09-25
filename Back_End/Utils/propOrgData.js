@@ -3,15 +3,18 @@
  * Utiliy function to organize Searching Data
  */
 
-const orgData = (respObj) => {
+const orgData = (respObj, minP, maxp) => {
    let arr = []
    respObj.forEach( user => {
       user.posts.forEach( post => {
-         arr.push ({
+      if (post.price <= maxp && post.price > minP)
+         {
+            arr.push ({
             _id: post._id,
             userId: user.userId,
             post
          })
+         }
       })
    });
 

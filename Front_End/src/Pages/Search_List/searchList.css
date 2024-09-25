@@ -91,6 +91,7 @@
  }
  
  .result-img {
+   cursor: pointer;
    width: 15rem;
    max-height:15rem ;
    object-fit: cover;

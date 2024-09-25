@@ -12,10 +12,13 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom';
 import { searchPropApi } from '../../Services/searchProperty';
 import Loading from '../../Components/Loading.js/loading';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 
 
 const SearchList = () => {
+	const history = useHistory()
+
 	const token = useSelector(
 		state => state.token
 	)
@@ -76,7 +79,11 @@ console.log(resp)
 						resp && resp.succes && resp.data && resp.data.length > 0 ? resp.data.map((property) => {
 						return (
 							<div key={property.post._id} className="search-result-item">
-								<img src={property.post.images[0]} alt="Property" className="result-img" />
+								<img onClick={() => {
+									history.push({
+										pathname: `/propertyList/${property.post._id}`
+									})
+								}} src={property.post.images[0]} alt="Property" className="result-img" />
 								<div className="result-details">
 									<h3 className="result-title">{property.post.title}</h3>
 									<p className="result-location"><FaMapMarkerAlt /> {property.post.address}</p>

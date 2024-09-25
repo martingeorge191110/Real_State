@@ -113,7 +113,6 @@ function App() {
 				<Route path="/propertyList" exact component={tokenValid ? SearchList : ""}/>
 				<Route path="/propertyList/:id" exact component={tokenValid ? Post : ""}/>
 				<Route path="/profile" exact component={tokenValid && userInf ? Profile : ""}/>
-				<Route path="/locationMap" exact component={tokenValid ? MapForm : ""}/>
 				<Route exact component={tokenValid ? MainPage : AuthPage}/>
 			</Switch>
 		</Router> : < AuthPage />) : <Loading color={"red"}/>}
