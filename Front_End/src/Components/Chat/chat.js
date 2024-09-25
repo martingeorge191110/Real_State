@@ -48,8 +48,10 @@ const Chat = ({avatar, userName, messArray, userId}) => {
               }
             </div>
             <div className="chat-input-section">
-              <input onChange={(e) => setMessInput(e.currentTarget.value)} value={messInput} type="text" placeholder="Type your message..." className="chat-input" />
+              <input onChange={(e) => setMessInput(e.currentTarget.value)} value={messInput} type="text" placeholder="Type your message..." className="chat-input" required/>
               <button onClick={ async () => {
+               if (!messInput || messInput === '')
+                  return;
                try {
                   const getMessage = await senMessApi(token, userId, "text", messInput)
                   setMessConChange(

@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {useInsertionEffect, useRef} from "react";
 import './navbar.css'
 import { useDispatch } from "react-redux";
 import { logOutAction } from "../../Store/action";
@@ -16,8 +16,6 @@ const NavBar = () => {
 	const userInfo = useSelector(
 		state => state.staticUserInf
 	)
-
-
 
 	return (
 	  <nav className="navbar">
@@ -46,7 +44,7 @@ const NavBar = () => {
 					}
 			  	>
 				 	<div className="navbar-profile-container">
-						<img src={""} alt="Profile" className="navbar-profile-pic" />
+						<img src={userInfo.avatar || ""} alt="Profile" className="navbar-profile-pic" />
 						<span className="navbar-profile-name">{userInfo ? userInfo.username : ""}</span>
 				 	</div>
 				 	{

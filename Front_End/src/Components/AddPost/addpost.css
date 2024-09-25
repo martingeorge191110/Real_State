@@ -1,0 +1,164 @@
+/* Add post section overlay styles */
+.add-post-section-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
+  align-items: center;
+  animation: fadeIn 0.5s ease;
+  z-index: 999999999999999;
+}
+
+.add-post-section-container {
+  position: relative;
+  top: 0;
+  background-color: #fff;
+  margin-top: 55rem;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  width: 100%;
+  animation: slideInUp 0.5s ease;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+  font-size: 2rem;
+  color: #333;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: #0073e6;
+}
+
+.add-post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.add-post-form label {
+  font-size: 1rem;
+  color: #666;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-post-form input[type="text"],
+.add-post-form input[type="number"],
+.add-post-form input[type="file"],
+.add-post-form textarea {
+  padding: 0.75rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.add-post-form input[type="text"]:focus,
+.add-post-form input[type="number"]:focus,
+.add-post-form textarea:focus {
+  border-color: #0073e6;
+  outline: none;
+}
+
+.add-post-form textarea {
+  resize: vertical;
+}
+
+.image-upload-label {
+  position: relative;
+}
+
+.preview-image-container,
+.preview-images-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.preview-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.preview-image:hover {
+  transform: scale(1.05);
+}
+.location-btn {
+  background-color: #0073e6;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.save-button,
+.cancel-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+}
+
+.save-button {
+  background-color: #0073e6;
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #005bb5;
+}
+
+.cancel-button {
+  background-color: #ccc;
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #999;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from { transform: translateY(100px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

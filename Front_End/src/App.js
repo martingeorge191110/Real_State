@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { chatInfAction, staticUserInfAction } from "./Store/action.js";
 import Profile from "./Pages/Profile/profile.js";
 import { getUsersIdFromChats } from "./Services/chatApiHandler.js";
+import MapForm from "./Pages/MapPage/mapPage.js";
 
 
 
@@ -103,7 +104,7 @@ function App() {
 			localStorage.removeItem("token")
 		}
 	}, [authValidRes])
-
+// locationMap
 	return (
 		<div className="App">
 		{ !loading ? (valid ? <Router>
@@ -112,6 +113,7 @@ function App() {
 				<Route path="/propertyList" exact component={tokenValid ? SearchList : ""}/>
 				<Route path="/propertyList/:id" exact component={tokenValid ? Post : ""}/>
 				<Route path="/profile" exact component={tokenValid && userInf ? Profile : ""}/>
+				<Route path="/locationMap" exact component={tokenValid ? MapForm : ""}/>
 				<Route exact component={tokenValid ? MainPage : AuthPage}/>
 			</Switch>
 		</Router> : < AuthPage />) : <Loading color={"red"}/>}

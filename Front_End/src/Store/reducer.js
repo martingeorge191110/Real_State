@@ -1,6 +1,6 @@
 
 class AppState {
-	constructor (token, searchProp, userInf, chatInfo) {
+	constructor (token, searchProp, userInf, chatInfo,) {
 		this.token = token || null
 		this.searchProp = searchProp || null
 		this.staticUserInf = userInf || null

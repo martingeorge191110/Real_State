@@ -9,4 +9,15 @@ const changeInputValue = (value, setFunction) => {
       setFunction(value)
 }
 
-export {changeInputValue}
+/**
+ * Function to change post values requirements
+ */
+
+const changeStateValues = (value, state, input, setFunction) => {
+      setFunction({
+            ...state,
+            [`${input}`]: value
+      })
+}
+
+export {changeInputValue, changeStateValues}

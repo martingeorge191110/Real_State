@@ -87,7 +87,7 @@ const getMessages = async (req, res, next) => {
             ]
          }
       })
-      console.log(chat.messages)
+
       if (!chat)
          return (chatResSuccessfuly(res, "Chat is not Exist", 404, null, false))
 

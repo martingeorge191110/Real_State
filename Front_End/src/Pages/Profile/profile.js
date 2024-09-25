@@ -10,6 +10,7 @@ import Loading from "../../Components/Loading.js/loading";
 import Chat from "../../Components/Chat/chat";
 import UpdateProfile from "../../Components/UpdateUserInf/updateUser";
 import { userPostsApi } from "../../Services/searchProperty";
+import AddPost from "../../Components/AddPost/addpost";
 
 const Profile = () => {
    const [selectedChat, setSelectedChat] = useState(null);
@@ -81,30 +82,8 @@ const Profile = () => {
   /* Update user informationb settings */
   const [updateInf, setUpdateInf] = useState(false)
 
-  //  const userPosts = [
-    //  {
-    //    post: {
-    //      _id: '1',
-    //      images: ['https://via.placeholder.com/150'],
-    //      title: 'Modern Apartment',
-    //      address: '456 Elm St, City, Country',
-    //      price: '250,000',
-    //      bedroom: 2,
-    //      bathroom: 2,
-    //    },
-    //  },
-    //  {
-    //    post: {
-    //      _id: '2',
-    //      images: ['https://via.placeholder.com/150'],
-    //      title: 'Cozy Cottage',
-    //      address: '789 Pine St, City, Country',
-    //      price: '150,000',
-    //      bedroom: 3,
-    //      bathroom: 1,
-    //    },
-    //  },
-  //  ];
+  /* New Post State */
+  const [newPost, setNewPost] = useState(false)
 
    return (
       mainUser ?
@@ -127,8 +106,9 @@ const Profile = () => {
         <div className="user-posts-section">
           <div className="section-title">
             <h2>My List</h2>
-            <button className="add-button"><FaPlus /> Add New Post</button>
+            <button onClick={ () => setNewPost(true)} className="add-button"><FaPlus/> Add New Post</button>
           </div>
+          {newPost ? <AddPost handleClose={setNewPost}/> : ""}
           <div className="posts-list">
             {
               userPosts && userPosts.succes && Array.isArray(userPosts.data.posts) ? 
@@ -142,7 +122,7 @@ const Profile = () => {
                         <p className="result-price">${property.price}</p>
                         <div className="result-fet-act">
                           <div className="result-features">
-                            <span><FaBed /> {property.bedroom}</span>
+                            <span><FaBed /> {property.bedRoom} </span>
                             <span><FaBath /> {property.bathroom}</span>
                           </div>
                           <div className="result-actions">
@@ -155,26 +135,6 @@ const Profile = () => {
                   )
                 }):  ""
             }
-            {/* {userPosts.posts.map((property) => (
-              <div key={property.post._id} className="search-result-item">
-                <img src={property.post.images[0]} alt="Property" className="result-img" />
-                <div className="result-details">
-                  <h3 className="result-title">{property.post.title}</h3>
-                  <p className="result-location"><FaMapMarkerAlt /> {property.post.address}</p>
-                  <p className="result-price">${property.post.price}</p>
-                  <div className="result-fet-act">
-                    <div className="result-features">
-                      <span><FaBed /> {property.post.bedroom}</span>
-                      <span><FaBath /> {property.post.bathroom}</span>
-                    </div>
-                    <div className="result-actions">
-                      <FaHeart className="result-icon" />
-                      <FaCommentDots className="result-icon" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))} */}
           </div>
         </div>
       </div>

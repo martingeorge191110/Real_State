@@ -33,7 +33,7 @@ const getuserById = async (req, res, next) => {
    const {usersId} = req.params
 
    const usersIdArr = usersId.split(",") || [usersId]
-   console.log(usersIdArr)
+
    try {
       const userInf = await User.find({
          _id: {

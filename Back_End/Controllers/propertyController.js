@@ -97,7 +97,6 @@ const SearchOnePost = async (req, res, next) => {
 	const { id } = req.params
 
 	try {
-		console.log(id)
 		const findPost = await Property.findOne({
 			"posts._id": id
 		}).select("userId").select("posts")

@@ -81,6 +81,8 @@ const chatInfAction = (arrayOfChats) => {
 	})
 }
 
+
+
 export {signUpAction, signInAction,
 	propSearchAction, logOutAction,
 	staticUserInfAction, chatInfAction}
