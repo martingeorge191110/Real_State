@@ -39,7 +39,7 @@ const SearchList = () => {
 			setLoading
 		).then(resObj => setResp(resObj))
 	} , [])
-	// console.log(resp.data)
+
 	/* Map Information */
 	const position = [51.505, -0.09]
 	const customIcon = new L.Icon({
@@ -50,7 +50,7 @@ const SearchList = () => {
 		shadowUrl: imgUrl2,
 		shadowSize: [41, 41]
 	});
-console.log(resp)
+
 	return (
 		<>
 		<NavBar/>
@@ -76,9 +76,9 @@ console.log(resp)
 				</div>
 				<div className="results-list">
 					{ !loading ? ( 
-						resp && resp.succes && resp.data && resp.data.length > 0 ? resp.data.map((property) => {
+						resp && resp.succes && resp.data && resp.data.length > 0 ? resp.data.map((property, index) => {
 						return (
-							<div key={property.post._id} className="search-result-item">
+							<div key={index} className="search-result-item">
 								<img onClick={() => {
 									history.push({
 										pathname: `/propertyList/${property.post._id}`
@@ -119,11 +119,11 @@ console.log(resp)
       		attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     		/>
     		{
-					resp && resp.succes && resp.data && resp.data.length > 0 ? resp.data.map((property) => {
+					resp && resp.succes && resp.data && resp.data.length > 0 ? resp.data.map((property, index) => {
 						return (
 							<Marker position={[property.post.latitude, property.post.longitude]} icon={customIcon}>
       					<Popup>
-								<div key={property._id} className="popupContainer">
+								<div key={index} className="popupContainer">
           					<img src={property.post.images[0]} alt="" />
           					<div className="textContainer">
             					<Link to={`/propertyList/${property.post._id}`}> {property.post.title}</Link>

@@ -8,7 +8,7 @@ import { propSearchAction } from '../../Store/action';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 import NavBar from '../../Components/Nav_Bar/navbar'
 import { countriesList } from '../../Data/searchData';
-import { FaSleigh } from 'react-icons/fa';
+
 
 const MainPage = () => {
 
@@ -19,7 +19,7 @@ const MainPage = () => {
 
   	/* Search Bar elements States */
 	/* City loation state*/
-		const [location, setLocation] = useState(null)
+		const [location, setLocation] = useState("")
 		const [cityValid, setCityValid] = useState(false)
 		const [cityList, setCityList] = useState([])
 
@@ -81,8 +81,8 @@ const MainPage = () => {
 								setCityValid(false)
 							changeInputValue(e.currentTarget.value, setLocation)
 							}} type="text" className='search-bar' value={location} placeholder="City Location" required/>
-						<input onChange={(e) => changeInputValue(Number(e.currentTarget.value), setMinPrice)} defaultValue={null} type="number" className='search-bar' placeholder="Min Price"/>
-						<input onChange={(e) => changeInputValue(Number(e.currentTarget.value), setMaxPrice)} defaultValue={null}  type="number" className='search-bar' placeholder="Max Price"/>
+						<input onChange={(e) => changeInputValue(Number(e.currentTarget.value), setMinPrice)} defaultValue={""} type="number" className='search-bar' placeholder="Min Price"/>
+						<input onChange={(e) => changeInputValue(Number(e.currentTarget.value), setMaxPrice)} defaultValue={""}  type="number" className='search-bar' placeholder="Max Price"/>
 						<button onClick={(e) => {
 							if (!inputsValid(location))
 							{
@@ -103,7 +103,7 @@ const MainPage = () => {
 				  		<p>20 Years of experience in the real estate industry.</p>
 					</div>
 					<div className="info-box">
-				  		<h3>Awarded Prizes</h3>
+				  	   <h3>Awarded Prizes</h3>
 				  		<p>Recognized as the best real estate platform in 2021.</p>
 					</div>
 					<div className="info-box">
